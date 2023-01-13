@@ -12,6 +12,7 @@ use std::process::{Command, Stdio};
 // }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // opens python3 interpreter
     let mut child = Command::new("python3")
         .stdin(Stdio::piped())
         .stderr(Stdio::piped())
@@ -22,6 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .stdin
         .as_mut()
         .ok_or("Child process stdin has not been captured!")?
+        // this is the command send to python interpreter
         .write_all(b"import this; copyright(); credits(); exit()")?;
 
     let output = child.wait_with_output()?;
